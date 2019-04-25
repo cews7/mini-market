@@ -7,13 +7,10 @@ export default class Navbar extends Component {
   render() {
     return (
       <div className="navbar navbar-dark bg-dark navbar-height">
-        <Link to='/'>
-          <img src={minimarket_logo} className="pull-left" />
-        </Link>
         <ul className='navbar-nav align-items-center products-position'>
-          <li className='nav-item ml-5'>
-            <Link to='/' className='nav-link'>
-              All Products
+          <li>
+            <Link to='/'>
+              <img src={minimarket_logo} className="pull-left logo-height" />
             </Link>
           </li>
         </ul>
