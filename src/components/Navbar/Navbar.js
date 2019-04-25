@@ -4,6 +4,8 @@ import './Navbar.css';
 import minimarket_logo from '../../minimarket_logo.png'
 
 export default class Navbar extends Component {
+  
+
   render() {
     return (
       <div className="navbar navbar-dark bg-dark navbar-height">

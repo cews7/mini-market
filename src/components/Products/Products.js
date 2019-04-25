@@ -10,10 +10,11 @@ export default class Products extends Component {
     }
   }
 
-  componentDidMount() {
-    this.setState({
+  componentDidMount = async() => {
+    await this.setState({
       products: rawData
     });
+    this.props.receiveProducts(this.state.products)
   }
 
   returnProducts = () => {
@@ -36,13 +37,11 @@ export default class Products extends Component {
             <div className='row'>
              {
                this.state.products !== null ? this.returnProducts() : null
-               // this.returnProducts()
              }
             </div>
           </div>
         </div>
       </>
-        // <Product />
     )
   }
 }
