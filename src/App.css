@@ -1,15 +1,11 @@
 :root {
   --mainAqua:#6C8EAD;
-  --mainRed:#FF3C38;
-  --lightRed:#A23E48;
-  --mainYellow:#FF8C42;
-  --lightYellow:#FFF275;
 }
 
 body {
   font-family: 'Montserrat', sans-serif;
-  background: var(--mainAqua) !important;
-  color: var(--lightRed) !important;
+  background: white !important;
+  color: var(--mainAqua) !important;
 }
 
 .title {
