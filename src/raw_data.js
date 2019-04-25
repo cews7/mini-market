@@ -20,7 +20,8 @@ export const rawData = [
   {
     id: 4,
     name: 'Coca-Cola',
-    description: 'Refreshing Soda'
+    description: 'Refreshing Soda',
+    price: 3
   },
   {
     id: 5,
