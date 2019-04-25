@@ -1,12 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Route, Switch } from 'react-router-dom';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Navbar from './components/Navbar';
+import Products from './components/Products';
+import Cart from './components/Cart';
 
 function App() {
   return (
     <>
-
+      <Navbar />
+      <Switch>
+        <Route exact path='/' component={Products} />
+        <Route path='/cart' component={Cart} />
+      </Switch>
     </>
   );
 }
