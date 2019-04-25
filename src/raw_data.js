@@ -1,4 +1,4 @@
-export const miniMarketProducts = [
+export const rawData = [
   {
     id: 1,
     name: 'Mango',

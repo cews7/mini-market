@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import Product from '../Product/Product';
+import { rawData } from '../../raw_data';
 
 export default class Products extends Component {
   state = {
-    products: []
+    products: rawData
   }
   render() {
     return (
