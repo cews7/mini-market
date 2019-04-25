@@ -19,8 +19,10 @@ export default class Products extends Component {
   returnProducts = () => {
     return this.state.products.map((product, i) => {
       return(
-        <div key={i}>
-          <p>{product.name}</p>
+        <div className="col-3 border text-center padding-x-sm" key={i}>
+          <h3>{product.name}</h3>
+          <p>{product.description}</p>
+          <em>{product.price}</em>
         </div>
       )
     });
