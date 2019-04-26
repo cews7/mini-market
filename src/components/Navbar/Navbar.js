@@ -16,7 +16,7 @@ export default class Navbar extends Component {
     await this.setState({
       search: event.target.value
     });
-    this.props.receiveSearch(this.state.search)
+    this.props.receiveSearch(this.state.search.toLowerCase())
   }
 
   render() {
