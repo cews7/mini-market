@@ -10,7 +10,8 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      products: null
+      products: null,
+      search: null
     }
   }
 
@@ -20,11 +21,17 @@ class App extends Component {
     });
   }
 
+  receiveSearch = (search) => {
+    this.setState({
+      search
+    });
+  }
+
   render() {
     return (
       <>
-        <Route path='/' render={(props) => <Navbar {...props} products={this.state.products} />}/>
-        <Route exact path='/' render={(props) => <Products {...props} receiveProducts={this.receiveProducts} />} />
+        <Route path='/' render={(props) => <Navbar {...props} receiveSearch={this.receiveSearch} products={this.state.products} />}/>
+        <Route exact path='/' render={(props) => <Products {...props} search={this.state.search} receiveProducts={this.receiveProducts} />} />
         <Route path='/cart' component={Cart} />
       </>
     );

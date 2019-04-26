@@ -62,7 +62,7 @@ export const rawData = [
   {
     id: 11,
     name: 'Beach Blanket',
-    description: 'Keeps to sand away',
+    description: 'Keeps the sand away',
     price: 11
   },
   {

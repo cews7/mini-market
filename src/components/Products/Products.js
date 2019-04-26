@@ -6,7 +6,8 @@ export default class Products extends Component {
   constructor() {
     super();
     this.state = {
-      products: null
+      products: null,
+      filteredProducts: []
     }
   }
 
@@ -17,13 +18,25 @@ export default class Products extends Component {
     this.props.receiveProducts(this.state.products)
   }
 
+  filterProductsBySearch = () => {
+    let filteredProducts = this.state.products;
+    if (this.props.search) {
+      filteredProducts = filteredProducts.filter((product) => {
+        return product.name.toLowerCase().includes(this.props.search) ||
+        product.description.toLowerCase().includes(this.props.search)
+      })
+    }
+    return filteredProducts;
+  }
+
   returnProducts = () => {
-    return this.state.products.map((product, i) => {
+    let filteredProducts = this.filterProductsBySearch();
+    return filteredProducts.map((product, i) => {
       return(
         <div className="col-3 border text-center padding-x-sm" key={i}>
           <h3>{product.name}</h3>
           <p>{product.description}</p>
-          <em>{product.price}</em>
+          <em>${product.price}</em>
         </div>
       )
     });
@@ -35,9 +48,7 @@ export default class Products extends Component {
         <div className='py-5'>
           <div className='container'>
             <div className='row'>
-             {
-               this.state.products !== null ? this.returnProducts() : null
-             }
+             { this.state.products !== null ? this.returnProducts() : null }
             </div>
           </div>
         </div>
