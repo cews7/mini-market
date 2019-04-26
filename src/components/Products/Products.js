@@ -7,7 +7,8 @@ export default class Products extends Component {
     super();
     this.state = {
       products: null,
-      filteredProducts: []
+      filteredProducts: [],
+      productsInCart: []
     }
   }
 
@@ -37,6 +38,13 @@ export default class Products extends Component {
           <h3>{product.name}</h3>
           <p>{product.description}</p>
           <em>${product.price}</em>
+          <form>
+            <label>
+             Quantity in Cart:
+             <input type='text' name='quantity' />
+            </label>
+             <input type='submit' value='Submit' />
+          </form>
         </div>
       )
     });

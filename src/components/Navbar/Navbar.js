@@ -8,7 +8,8 @@ export default class Navbar extends Component {
   constructor() {
     super();
     this.state = {
-      search: ''
+      search: '',
+      isCart: false
     }
   }
 
@@ -17,6 +18,13 @@ export default class Navbar extends Component {
       search: event.target.value
     });
     this.props.receiveSearch(this.state.search.toLowerCase())
+  }
+
+  handleClick = async() => {
+    await this.setState({
+      isCart: !this.state.isCart
+    })
+    this.props.receiveCart(this.state.isCart)
   }
 
   render() {
@@ -31,7 +39,7 @@ export default class Navbar extends Component {
         </ul>
         <input type='text' value={this.state.search} onChange={this.handleSearchInput} />
         <Link to='/cart' className='ml-auto'>
-          <button className='cart-icon-position'>
+          <button className='cart-icon-position' onClick={this.handleClick}>
             <i className='fas fa-cart-plus' />
           </button>
         </Link>
