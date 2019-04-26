@@ -8,7 +8,9 @@ export default class Products extends Component {
     this.state = {
       products: null,
       filteredProducts: [],
-      productsInCart: []
+      productsInCart: [],
+      currentProduct: {},
+      currentQuantity: 0
     }
   }
 
@@ -30,20 +32,47 @@ export default class Products extends Component {
     return filteredProducts;
   }
 
+  handleChange = (event) => {
+    this.setState({
+      currentQuantity: event.target.value
+    });
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    let productToAdd = {...this.state.currentProduct, quantity: this.state.currentQuantity}
+    let newCartProducts = [...this.state.productsInCart, productToAdd]
+    this.setState({
+      productsInCart: newCartProducts
+    });
+  }
+
+  handleProductSelect = (event) => {
+    let currentProduct = this.state.currentProduct
+    if (event.target.id !== null) {
+
+      currentProduct = this.state.products.find((product) => {
+        return product.id === parseInt(event.target.id)
+      });
+    }
+    this.setState({ currentProduct })
+    return currentProduct
+  }
+
   returnProducts = () => {
     let filteredProducts = this.filterProductsBySearch();
     return filteredProducts.map((product, i) => {
       return(
-        <div className="col-3 border text-center padding-x-sm" key={i}>
+        <div className="col-3 border text-center padding-x-sm" onClick={this.handleProductSelect} key={i}>
           <h3>{product.name}</h3>
           <p>{product.description}</p>
           <em>${product.price}</em>
-          <form>
+          <form onSubmit={this.handleSubmit} product={product}>
             <label>
              Quantity in Cart:
-             <input type='text' name='quantity' />
+             <input type='text' name='quantity' onChange={this.handleChange} />
             </label>
-             <input type='submit' value='Submit' />
+             <input type='submit' value='Submit' id={product.id} onSubmit={this.handleSubmit} />
           </form>
         </div>
       )

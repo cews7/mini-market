@@ -28,17 +28,11 @@ class App extends Component {
     });
   }
 
-  receiveCart = (isCart) => {
-    this.setState({
-      isCart
-    });
-  }
-
   render() {
     return (
       <>
-        <Route path='/' render={(props) => <Navbar {...props} receiveCart={this.receiveCart} receiveSearch={this.receiveSearch} products={this.state.products} />}/>
-        <Route exact path='/' render={(props) => <Products {...props} isCart={this.state.isCart} search={this.state.search} receiveProducts={this.receiveProducts} />} />
+        <Route path='/' render={(props) => <Navbar {...props} receiveSearch={this.receiveSearch} products={this.state.products} />}/>
+        <Route exact path='/' render={(props) => <Products {...props} search={this.state.search} receiveProducts={this.receiveProducts} />} />
         <Route path='/cart' component={Cart} />
       </>
     );
