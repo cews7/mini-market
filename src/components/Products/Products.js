@@ -42,11 +42,33 @@ export default class Products extends Component {
     });
   }
 
+  handleClick = (sortOrder) => {
+    let filteredProducts = this.filterProductsBySearch();
+    if (sortOrder === 'ascending') {
+      filteredProducts = filteredProducts.sort((a, b) => {
+        return a.price - b.price
+      });
+    } else {
+      filteredProducts = filteredProducts.sort((a, b) => {
+        return b.price - a.price
+      });
+    }
+    return this.setState({
+      filteredProducts
+    });
+  }
+
   render() {
     return (
       <>
         <div className='py-5'>
           <div className='container'>
+          <button onClick={() => this.handleClick('ascending')}>
+          <i className="fas fa-arrow-alt-circle-up" />
+          </button>
+          <button onClick={() => this.handleClick('descending')}>
+          <i className="fas fa-arrow-circle-down" />
+          </button>
             <div className='row'>
              { this.state.products !== null ? this.returnProducts() : null }
             </div>
