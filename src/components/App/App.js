@@ -28,13 +28,13 @@ class App extends Component {
     });
   }
 
-  receiveProductsInCart = (productsInCart) => {
-    // let updatedCartItems = [...this.state.allCartItems, ...this.props.productsInCart]
-
-    this.setState({
-      productsInCart
-    });
-  }
+  // receiveProductsInCart = (productsInCart) => {
+  //   // let updatedCartItems = [...this.state.allCartItems, ...this.props.productsInCart]
+  //
+  //   this.setState({
+  //     productsInCart
+  //   });
+  // }
 
   render() {
     return (

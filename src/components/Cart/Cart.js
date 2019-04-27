@@ -10,7 +10,7 @@ export default class Cart extends Component {
   returnProductsInCart = () => {
     return this.props.productsInCart.map((product, i) => {
       return (
-        <div className='col-3 border text-center padding-x-sm'>
+        <div className='col-3 border text-center padding-x-sm' key={i}>
           <h3>{product.name}</h3>
           <p>{product.description}</p>
           <em>${product.price}</em>

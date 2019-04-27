@@ -9,3 +9,14 @@
 .cart-icon-position {
   margin-bottom: 30px;
 }
+
+.search-position {
+  margin-left: 10px;
+  margin-bottom: 20px;
+}
+
+.search-shape {
+  border-radius: 25px;
+  padding: 5px;
+  outline: 0;
+}
