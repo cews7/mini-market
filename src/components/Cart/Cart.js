@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 
 export default class Cart extends Component {
-
+  constructor() {
+    super();
+    this.state = {
+      allCartItems: []
+    }
+  }
   returnProductsInCart = () => {
     return this.props.productsInCart.map((product, i) => {
       return (

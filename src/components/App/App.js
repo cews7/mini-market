@@ -29,6 +29,8 @@ class App extends Component {
   }
 
   receiveProductsInCart = (productsInCart) => {
+    // let updatedCartItems = [...this.state.allCartItems, ...this.props.productsInCart]
+
     this.setState({
       productsInCart
     });

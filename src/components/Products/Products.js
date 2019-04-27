@@ -45,6 +45,8 @@ export default class Products extends Component {
     await this.setState({
       productsInCart: newCartProducts
     });
+    console.log(this.state.productsInCart)
+
     this.props.receiveProductsInCart(this.state.productsInCart)
   }
 
