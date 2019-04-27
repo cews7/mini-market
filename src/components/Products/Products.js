@@ -38,13 +38,14 @@ export default class Products extends Component {
     });
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = async(event) => {
     event.preventDefault();
     let productToAdd = {...this.state.currentProduct, quantity: this.state.currentQuantity}
     let newCartProducts = [...this.state.productsInCart, productToAdd]
-    this.setState({
+    await this.setState({
       productsInCart: newCartProducts
     });
+    this.props.receiveProductsInCart(this.state.productsInCart)
   }
 
   handleProductSelect = (event) => {
@@ -63,7 +64,7 @@ export default class Products extends Component {
     let filteredProducts = this.filterProductsBySearch();
     return filteredProducts.map((product, i) => {
       return(
-        <div className="col-3 border text-center padding-x-sm" onClick={this.handleProductSelect} key={i}>
+        <div className='col-3 border text-center padding-x-sm' onClick={this.handleProductSelect} key={i}>
           <h3>{product.name}</h3>
           <p>{product.description}</p>
           <em>${product.price}</em>
