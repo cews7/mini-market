@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Product from '../Product/Product';
+import './Products.css'
 import { rawData } from '../../raw_data';
 
 export default class Products extends Component {
@@ -38,13 +39,15 @@ export default class Products extends Component {
     });
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = async(event) => {
     event.preventDefault();
     let productToAdd = {...this.state.currentProduct, quantity: this.state.currentQuantity}
     let newCartProducts = [...this.state.productsInCart, productToAdd]
-    this.setState({
+    await this.setState({
       productsInCart: newCartProducts
     });
+
+    this.props.receiveProductsInCart(this.state.productsInCart)
   }
 
   handleProductSelect = (event) => {
@@ -63,14 +66,14 @@ export default class Products extends Component {
     let filteredProducts = this.filterProductsBySearch();
     return filteredProducts.map((product, i) => {
       return(
-        <div className="col-3 border text-center padding-x-sm" onClick={this.handleProductSelect} key={i}>
+        <div className='col-3 border text-center padding-x-sm' onClick={this.handleProductSelect} key={i}>
           <h3>{product.name}</h3>
           <p>{product.description}</p>
           <em>${product.price}</em>
           <form onSubmit={this.handleSubmit} product={product}>
             <label>
              Quantity in Cart:
-             <input type='text' name='quantity' onChange={this.handleChange} />
+             <input type='number' min='0' name='quantity' onChange={this.handleChange} />
             </label>
              <input type='submit' value='Submit' id={product.id} onSubmit={this.handleSubmit} />
           </form>
@@ -99,13 +102,15 @@ export default class Products extends Component {
     return (
       <>
         <div className='py-5'>
+          <div className='sort-position'>
+            <button onClick={() => this.handleClick('ascending')}>
+            <i className="fas fa-arrow-alt-circle-up" />
+            </button>
+            <button onClick={() => this.handleClick('descending')}>
+            <i className="fas fa-arrow-circle-down" />
+            </button>
+          </div>
           <div className='container'>
-          <button onClick={() => this.handleClick('ascending')}>
-          <i className="fas fa-arrow-alt-circle-up" />
-          </button>
-          <button onClick={() => this.handleClick('descending')}>
-          <i className="fas fa-arrow-circle-down" />
-          </button>
             <div className='row'>
              { this.state.products !== null ? this.returnProducts() : null }
             </div>

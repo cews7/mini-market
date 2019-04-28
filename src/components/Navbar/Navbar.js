@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { matchPath } from 'react-router';
 import './Navbar.css';
 import minimarket_logo from '../../minimarket_logo.png';
 
@@ -20,6 +21,10 @@ export default class Navbar extends Component {
   }
 
   render() {
+    const isCartPathActive = !!matchPath(
+      this.props.location.pathname,
+      '/cart'
+    )
     return (
       <div className="navbar navbar-dark bg-dark navbar-height">
         <ul className='navbar-nav align-items-center products-position'>
@@ -29,7 +34,10 @@ export default class Navbar extends Component {
             </Link>
           </li>
         </ul>
-        <input type='text' value={this.state.search} onChange={this.handleSearchInput} />
+        {
+          !isCartPathActive &&
+          <input className='search-position search-shape' type='text' placeholder='Search products...' value={this.state.search} onChange={this.handleSearchInput} />
+        }
         <Link to='/cart' className='ml-auto'>
           <button className='cart-icon-position'>
             <i className='fas fa-cart-plus' />

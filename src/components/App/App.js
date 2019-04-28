@@ -12,7 +12,7 @@ class App extends Component {
     this.state = {
       products: null,
       search: null,
-      isCart: null
+      allCartItems: []
     }
   }
 
@@ -28,12 +28,19 @@ class App extends Component {
     });
   }
 
+  receiveProductsInCart = (productsInCart) => {
+    let updatedCartItems = [...this.state.allCartItems, ...productsInCart]
+    this.setState({
+      allCartItems: updatedCartItems
+    });
+  }
+
   render() {
     return (
       <>
         <Route path='/' render={(props) => <Navbar {...props} receiveSearch={this.receiveSearch} products={this.state.products} />}/>
-        <Route exact path='/' render={(props) => <Products {...props} search={this.state.search} receiveProducts={this.receiveProducts} />} />
-        <Route path='/cart' component={Cart} />
+        <Route exact path='/' render={(props) => <Products {...props} search={this.state.search} receiveProductsInCart={this.receiveProductsInCart} receiveProducts={this.receiveProducts} />} />
+        <Route path='/cart' render={(props) => <Cart {...props} allCartItems={this.state.allCartItems} />} />
       </>
     );
   }
