@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Product from '../Product/Product';
 import './Products.css'
 import { rawData } from '../../raw_data';
 
@@ -9,7 +8,7 @@ export default class Products extends Component {
     this.state = {
       products: null,
       filteredProducts: [],
-      productsInCart: [],
+      productAddingToCart: {},
       currentProduct: {},
       currentQuantity: 0
     }
@@ -42,12 +41,11 @@ export default class Products extends Component {
   handleSubmit = async(event) => {
     event.preventDefault();
     let productToAdd = {...this.state.currentProduct, quantity: this.state.currentQuantity}
-    let newCartProducts = [...this.state.productsInCart, productToAdd]
-    await this.setState({
-      productsInCart: newCartProducts
-    });
 
-    this.props.receiveProductsInCart(this.state.productsInCart)
+    await this.setState({
+      productAddingToCart: productToAdd
+    });
+    this.props.receiveProductsInCart(this.state.productAddingToCart)
   }
 
   handleProductSelect = (event) => {
@@ -58,7 +56,9 @@ export default class Products extends Component {
         return product.id === parseInt(event.target.id)
       });
     }
-    this.setState({ currentProduct })
+    this.setState({
+      currentProduct
+    });
     return currentProduct
   }
 
@@ -73,7 +73,7 @@ export default class Products extends Component {
           <form onSubmit={this.handleSubmit} product={product}>
             <label>
              Quantity in Cart:
-             <input type='number' autocomplete="off" min='0' name='quantity' onChange={this.handleChange} />
+             <input type='number' autoComplete="off" min='0' name='quantity' onChange={this.handleChange} />
             </label>
              <input type='submit' value='Submit' id={product.id} onSubmit={this.handleSubmit} />
           </form>

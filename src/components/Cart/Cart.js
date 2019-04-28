@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import _ from 'underscore';
 
 export default class Cart extends Component {
   constructor() {
@@ -11,7 +12,36 @@ export default class Cart extends Component {
   componentDidMount = () => {
     this.setState({
       currentCartItems: this.props.allCartItems
+    });
+  }
+
+  handleRemove = (product, event) => {
+    let updatedItems = _.filter(this.state.currentCartItems, (item) => {
+      return item.name !== product.name
+    });
+
+    this.setState({
+      currentCartItems: updatedItems
+    });
+
+    this.props.adjustProductQuantity(this.state.currentCartItems)
+  }
+
+  handleChange = async(product, event) => {
+    let updatedItems = this.state.currentCartItems.map((item) => {
+      if (item.name == product.name) {
+        item.quantity = event.target.value
+        return item
+      } else {
+        return item
+      }
+    });
+
+    await this.setState({
+      currentCartItems: updatedItems
     })
+
+    this.props.adjustProductQuantity(this.state.currentCartItems)
   }
 
   returnProductsInCart = () => {
@@ -22,7 +52,10 @@ export default class Cart extends Component {
           <p>{product.description}</p>
           <em>${product.price}</em>
           <br/>
-          <em>Quantity: {product.quantity}</em>
+          <label>Quantity:
+            <input type='number' min='1' value={product.quantity} autoComplete="off" name='quantity' onChange={this.handleChange.bind(this, product)} />
+          </label>
+          <button onClick={this.handleRemove.bind(this, product)}>Remove</button>
         </div>
       )
     });
