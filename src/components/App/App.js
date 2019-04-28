@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from '../Navbar/Navbar';
 import Products from '../Products/Products';
 import Cart from '../Cart/Cart';
+import _ from 'underscore';
 
 class App extends Component {
   constructor() {
@@ -28,8 +29,29 @@ class App extends Component {
     });
   }
 
-  receiveProductsInCart = (productsInCart) => {
-    let updatedCartItems = [...this.state.allCartItems, ...productsInCart]
+  adjustProductQuantity = (updatedItems) => {
+    this.setState({
+      allCartItem: updatedItems
+    })
+  }
+
+
+  receiveProductsInCart = (productAddingToCart) => {
+    let updatedCartItems = this.state.allCartItems
+    let includesItem = _.some(this.state.allCartItems, (item) => { return item.name === productAddingToCart.name})
+    
+    if (!includesItem) {
+      updatedCartItems = [...this.state.allCartItems, productAddingToCart]
+    } else {
+      updatedCartItems.map((itemInCart) => {
+        if (itemInCart.name === productAddingToCart.name) {
+          itemInCart.quantity = parseInt(itemInCart.quantity) + parseInt(productAddingToCart.quantity)
+          return itemInCart
+        } else {
+          return itemInCart
+        }
+      })
+    }
     this.setState({
       allCartItems: updatedCartItems
     });
@@ -40,7 +62,7 @@ class App extends Component {
       <>
         <Route path='/' render={(props) => <Navbar {...props} receiveSearch={this.receiveSearch} products={this.state.products} />}/>
         <Route exact path='/' render={(props) => <Products {...props} search={this.state.search} receiveProductsInCart={this.receiveProductsInCart} receiveProducts={this.receiveProducts} />} />
-        <Route path='/cart' render={(props) => <Cart {...props} allCartItems={this.state.allCartItems} />} />
+        <Route path='/cart' render={(props) => <Cart {...props} allCartItems={this.state.allCartItems} adjustProductQuantity={this.adjustProductQuantity}/>} />
       </>
     );
   }

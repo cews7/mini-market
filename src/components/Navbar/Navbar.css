@@ -10,6 +10,11 @@
   margin-bottom: 30px;
 }
 
+.cart-font {
+  font-family: 'Muli', sans-serif;
+  padding-right: 10px;
+}
+
 .search-position {
   margin-left: 10px;
   margin-bottom: 20px;

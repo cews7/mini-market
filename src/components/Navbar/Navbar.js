@@ -40,6 +40,7 @@ export default class Navbar extends Component {
         }
         <Link to='/cart' className='ml-auto'>
           <button className='cart-icon-position'>
+            <span className='cart-font'>Cart</span>
             <i className='fas fa-cart-plus' />
           </button>
         </Link>
