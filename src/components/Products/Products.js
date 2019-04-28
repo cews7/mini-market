@@ -73,7 +73,7 @@ export default class Products extends Component {
           <form onSubmit={this.handleSubmit} product={product}>
             <label>
              Quantity in Cart:
-             <input type='number' min='0' name='quantity' onChange={this.handleChange} />
+             <input type='number' autocomplete="off" min='0' name='quantity' onChange={this.handleChange} />
             </label>
              <input type='submit' value='Submit' id={product.id} onSubmit={this.handleSubmit} />
           </form>
