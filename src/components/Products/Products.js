@@ -19,12 +19,6 @@ export default class Products extends Component {
     this.props.receiveProducts(this.state.products)
   }
 
-  componentWillUnmount = async() => {
-    this.setState({
-      products: null
-    });
-  }
-
   filterProductsBySearch = () => {
     let filteredProducts = this.state.products;
     if (this.props.search) {
@@ -36,8 +30,8 @@ export default class Products extends Component {
     return filteredProducts;
   }
 
-  handleChange = async(product, event) => {
-    let updatedProduct = product
+  handleChange = async(event) => {
+    let updatedProduct = this.state.products[event.target.id - 1]
     updatedProduct.quantity = event.target.value
 
     await this.setState({
@@ -72,21 +66,20 @@ export default class Products extends Component {
           <div className='text-center card custom-card' onClick={this.handleProductSelect} key={i}>
             <h3 className='card-header'>{product.name}</h3>
             <div className='card-body'>
-            <h5 className='card-title'>{product.description}</h5>
-
-            <p className='card-text'>${product.price}</p>
-            <form onSubmit={this.handleSubmit} product={product}>
-            <div className='form-group row'>
-            <label className='col-5 col-form-label'>
-              Quantity: &nbsp;
-            </label>
-            <input type='number' autoComplete="off" min='0' name='quantity' onChange={this.handleChange.bind(this, product)} className='form-control col-5' />
-            </div>
+              <h5 className='card-title'>{product.description}</h5>
+              <p className='card-text'>${product.price}</p>
+              <form onSubmit={this.handleSubmit} product={product}>
+                <div className='form-group row'>
+                  <label className='col-5 col-form-label'>
+                    Quantity: &nbsp;
+                  </label>
+                  <input type='number' autoComplete="off" min='0' id={product.id} name='quantity' onChange={this.handleChange} className='form-control col-5' value={product.quantity} />
+                </div>
                <button type='submit' className='btn btn-primary' id={product.id} onSubmit={this.handleSubmit}>Add to Cart</button>
             </form>
-            </div>
           </div>
         </div>
+      </div>
       )
     });
   }

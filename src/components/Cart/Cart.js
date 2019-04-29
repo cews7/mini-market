@@ -28,7 +28,8 @@ export default class Cart extends Component {
     this.props.adjustProductQuantity(this.state.currentCartItems)
   }
 
-  handleChange = async(product, event) => {
+  handleChange = async(event) => {
+    let product = this.state.currentCartItems[event.target.id - 1]
     let updatedItems = this.state.currentCartItems.map((item) => {
       if (item.name == product.name) {
         item.quantity = event.target.value
@@ -48,15 +49,23 @@ export default class Cart extends Component {
   returnProductsInCart = () => {
     return this.state.currentCartItems.map((product, i) => {
       return (
-        <div className='col-3 border text-center padding-x-sm' key={i}>
-          <h3>{product.name}</h3>
-          <p>{product.description}</p>
-          <em>${product.price}</em>
-          <br/>
-          <label>Quantity:
-            <input type='number' min='1' value={product.quantity} autoComplete="off" name='quantity' onChange={this.handleChange.bind(this, product)} />
-          </label>
-          <button onClick={this.handleRemove.bind(this, product)}>Remove</button>
+        <div className='col-3'>
+          <div className='text-center card custom-card' key={i}>
+            <h3 className='card-header'>{product.name}</h3>
+            <div className='card-body'>
+              <h5 className='card-title'>{product.description}</h5>
+              <p className='card-text'>${product.price}</p>
+              <form>
+                <div className='form-group row'>
+                  <label className='col-5 col-form-label'>
+                    Quantity: &nbsp;
+                  </label>
+                  <input type='number' min='1' id={product.id} value={product.quantity} autoComplete="off" name='quantity' onChange={this.handleChange} className='form-control col-5' />
+                </div>
+                <button className='btn btn-primary' onClick={this.handleRemove.bind(this, product)}>Remove</button>
+              </form>
+            </div>
+          </div>
         </div>
       )
     });
