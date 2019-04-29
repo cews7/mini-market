@@ -41,7 +41,7 @@ export default class Cart extends Component {
 
     await this.setState({
       currentCartItems: updatedItems
-    })
+    });
 
     this.props.adjustProductQuantity(this.state.currentCartItems)
   }
