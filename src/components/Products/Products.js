@@ -8,9 +8,7 @@ export default class Products extends Component {
     this.state = {
       products: null,
       filteredProducts: [],
-      productAddingToCart: {},
       currentProduct: {},
-      currentQuantity: 0
     }
   }
 
@@ -19,6 +17,12 @@ export default class Products extends Component {
       products: rawData
     });
     this.props.receiveProducts(this.state.products)
+  }
+
+  componentWillUnmount = async() => {
+    this.setState({
+      products: null
+    });
   }
 
   filterProductsBySearch = () => {
@@ -32,20 +36,18 @@ export default class Products extends Component {
     return filteredProducts;
   }
 
-  handleChange = (event) => {
-    this.setState({
-      currentQuantity: event.target.value
+  handleChange = async(product, event) => {
+    let updatedProduct = product
+    updatedProduct.quantity = event.target.value
+
+    await this.setState({
+      currentProduct: updatedProduct
     });
   }
 
   handleSubmit = async(event) => {
     event.preventDefault();
-    let productToAdd = {...this.state.currentProduct, quantity: this.state.currentQuantity}
-
-    await this.setState({
-      productAddingToCart: productToAdd
-    });
-    this.props.receiveProductsInCart(this.state.productAddingToCart)
+    this.props.receiveProductsInCart(this.state.currentProduct)
   }
 
   handleProductSelect = (event) => {
@@ -66,17 +68,24 @@ export default class Products extends Component {
     let filteredProducts = this.filterProductsBySearch();
     return filteredProducts.map((product, i) => {
       return(
-        <div className='col-3 border text-center padding-x-sm' onClick={this.handleProductSelect} key={i}>
-          <h3>{product.name}</h3>
-          <p>{product.description}</p>
-          <em>${product.price}</em>
-          <form onSubmit={this.handleSubmit} product={product}>
-            <label>
-             Quantity in Cart:
-             <input type='number' autoComplete="off" min='0' name='quantity' onChange={this.handleChange} />
+        <div className="col-3">
+          <div className='text-center card custom-card' onClick={this.handleProductSelect} key={i}>
+            <h3 className='card-header'>{product.name}</h3>
+            <div className='card-body'>
+            <h5 className='card-title'>{product.description}</h5>
+
+            <p className='card-text'>${product.price}</p>
+            <form onSubmit={this.handleSubmit} product={product}>
+            <div className='form-group row'>
+            <label className='col-5 col-form-label'>
+              Quantity: &nbsp;
             </label>
-             <input type='submit' value='Submit' id={product.id} onSubmit={this.handleSubmit} />
-          </form>
+            <input type='number' autoComplete="off" min='0' name='quantity' onChange={this.handleChange.bind(this, product)} className='form-control col-5' />
+            </div>
+               <button type='submit' className='btn btn-primary' id={product.id} onSubmit={this.handleSubmit}>Add to Cart</button>
+            </form>
+            </div>
+          </div>
         </div>
       )
     });

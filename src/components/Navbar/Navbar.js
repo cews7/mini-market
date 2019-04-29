@@ -39,7 +39,7 @@ export default class Navbar extends Component {
           <input className='search-position search-shape' type='text' placeholder='Search products...' value={this.state.search} onChange={this.handleSearchInput} />
         }
         <Link to='/cart' className='ml-auto'>
-          <button className='cart-icon-position'>
+          <button className='cart-icon-position btn'>
             <span className='cart-font'>Cart</span>
             <i className='fas fa-cart-plus' />
           </button>

@@ -31,7 +31,7 @@ class App extends Component {
 
   adjustProductQuantity = (updatedItems) => {
     this.setState({
-      allCartItem: updatedItems
+      allCartItems: updatedItems
     })
   }
 
@@ -39,8 +39,8 @@ class App extends Component {
   receiveProductsInCart = (productAddingToCart) => {
     let updatedCartItems = this.state.allCartItems
     let includesItem = _.some(this.state.allCartItems, (item) => { return item.name === productAddingToCart.name})
-    
-    if (!includesItem) {
+
+    if (!includesItem && (productAddingToCart.quantity > 0)) {
       updatedCartItems = [...this.state.allCartItems, productAddingToCart]
     } else {
       updatedCartItems.map((itemInCart) => {
@@ -52,6 +52,7 @@ class App extends Component {
         }
       })
     }
+
     this.setState({
       allCartItems: updatedCartItems
     });

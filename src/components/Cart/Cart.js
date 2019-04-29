@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'underscore';
+import './Cart.css'
 
 export default class Cart extends Component {
   constructor() {
@@ -15,12 +16,12 @@ export default class Cart extends Component {
     });
   }
 
-  handleRemove = (product, event) => {
+  handleRemove = async(product, event) => {
     let updatedItems = _.filter(this.state.currentCartItems, (item) => {
       return item.name !== product.name
     });
 
-    this.setState({
+    await this.setState({
       currentCartItems: updatedItems
     });
 
@@ -61,13 +62,22 @@ export default class Cart extends Component {
     });
   }
 
+  totalPrice = () => {
+    let total = 0
+    this.state.currentCartItems.map((product) => {
+      total += product.quantity * product.price
+    });
+    return total
+  }
+
   render() {
     return(
     <>
       <div className='py-5'>
         <div className='container'>
+          { this.totalPrice() !== 0 ? <h3 className='cost-position cost-label'>Total Cost: ${ this.totalPrice() }</h3> : null }
           <div className='row'>
-            { this.props.allCartItems.length ? this.returnProductsInCart() : null }
+            { this.props.allCartItems.length ? this.returnProductsInCart() : <h1>Cart is empty...</h1> }
           </div>
         </div>
       </div>
