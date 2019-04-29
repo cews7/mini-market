@@ -25,9 +25,9 @@ export default class Products extends Component {
       filteredProducts = filteredProducts.filter((product) => {
         return product.name.toLowerCase().includes(this.props.search) ||
         product.description.toLowerCase().includes(this.props.search)
-      })
+      });
     }
-    return filteredProducts;
+    return filteredProducts
   }
 
   handleChange = async(product, event) => {
@@ -39,14 +39,13 @@ export default class Products extends Component {
   }
 
   handleSubmit = async(event) => {
-    event.preventDefault();
+    event.preventDefault()
     this.props.receiveProductsInCart(this.state.currentProduct)
   }
 
   handleProductSelect = (event) => {
     let currentProduct = this.state.currentProduct
     if (event.target.id !== null) {
-
       currentProduct = this.state.products.find((product) => {
         return product.id === parseInt(event.target.id)
       });
@@ -84,7 +83,7 @@ export default class Products extends Component {
   }
 
   handleClick = (sortOrder) => {
-    let filteredProducts = this.filterProductsBySearch();
+    let filteredProducts = this.filterProductsBySearch()
     if (sortOrder === 'ascending') {
       filteredProducts = filteredProducts.sort((a, b) => {
         return a.price - b.price

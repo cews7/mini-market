@@ -32,7 +32,7 @@ class App extends Component {
   adjustProductQuantity = (updatedItems) => {
     this.setState({
       allCartItems: updatedItems
-    })
+    });
   }
 
 
@@ -50,7 +50,7 @@ class App extends Component {
         } else {
           return itemInCart
         }
-      })
+      });
     }
 
     this.setState({
