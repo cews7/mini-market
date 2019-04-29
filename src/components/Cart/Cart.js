@@ -17,6 +17,7 @@ export default class Cart extends Component {
   }
 
   handleRemove = async(product, event) => {
+    event.preventDefault();
     let updatedItems = _.filter(this.state.currentCartItems, (item) => {
       return item.name !== product.name
     });
@@ -28,8 +29,7 @@ export default class Cart extends Component {
     this.props.adjustProductQuantity(this.state.currentCartItems)
   }
 
-  handleChange = async(event) => {
-    let product = this.state.currentCartItems[event.target.id - 1]
+  handleChange = async(product, event) => {
     let updatedItems = this.state.currentCartItems.map((item) => {
       if (item.name == product.name) {
         item.quantity = event.target.value
@@ -60,7 +60,7 @@ export default class Cart extends Component {
                   <label className='col-5 col-form-label'>
                     Quantity: &nbsp;
                   </label>
-                  <input type='number' min='1' id={product.id} value={product.quantity} autoComplete="off" name='quantity' onChange={this.handleChange} className='form-control col-5' />
+                  <input type='number' min='1' value={product.quantity} autoComplete="off" name='quantity' onChange={this.handleChange.bind(this, product)} className='form-control col-5' />
                 </div>
                 <button className='btn btn-primary' onClick={this.handleRemove.bind(this, product)}>Remove</button>
               </form>
