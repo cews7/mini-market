@@ -30,12 +30,11 @@ export default class Products extends Component {
     return filteredProducts;
   }
 
-  handleChange = async(event) => {
-    let updatedProduct = this.state.products[event.target.id - 1]
-    updatedProduct.quantity = event.target.value
+  handleChange = async(product, event) => {
+    product.quantity = event.target.value
 
     await this.setState({
-      currentProduct: updatedProduct
+      currentProduct: product
     });
   }
 
@@ -73,7 +72,7 @@ export default class Products extends Component {
                   <label className='col-5 col-form-label'>
                     Quantity: &nbsp;
                   </label>
-                  <input type='number' autoComplete="off" min='0' id={product.id} name='quantity' onChange={this.handleChange} className='form-control col-5' value={product.quantity} />
+                  <input type='number' autoComplete="off" min='0' name='quantity' onChange={this.handleChange.bind(this, product)} className='form-control col-5' value={product.quantity} />
                 </div>
                <button type='submit' className='btn btn-primary' id={product.id} onSubmit={this.handleSubmit}>Add to Cart</button>
             </form>
